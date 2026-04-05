@@ -1,12 +1,11 @@
-FROM node:lts-buster
+FROM node:20-bookworm-slim
 
 RUN apt-get update && \
-  apt-get install -y \
-  ffmpeg \
-  imagemagick \
-  webp && \
-  apt-get upgrade -y && \
-  rm -rf /var/lib/apt/lists/*
+    apt-get install -y --no-install-recommends \
+    ffmpeg \
+    imagemagick \
+    webp && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY package.json .
 
