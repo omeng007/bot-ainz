@@ -1,22 +1,18 @@
-FROM node:20-bookworm-slim
+FROM node:20-bookworm
 
-# Install dependencies sistem + git (diperlukan untuk beberapa package npm)
+# Update dan install package yang diperlukan
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y \
     ffmpeg \
     imagemagick \
     webp \
-    git \
-    ca-certificates && \
-    rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy package.json terlebih dahulu untuk mengoptimalkan cache layer
+# Copy package.json dan install dependencies
 COPY package.json .
-
-# Install semua dependencies dari package.json (termasuk qrcode-terminal jika ada)
 RUN npm install
 
-# Copy seluruh kode
+# Copy seluruh source code
 COPY . .
 
 EXPOSE 5000
